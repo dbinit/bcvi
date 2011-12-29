@@ -990,6 +990,7 @@ sub candidate_rc_files {
     my($self) = @_;
     my $home = $self->home_directory();
     return(
+        "$home/.kshrc",
         "$home/.bashrc_local",
         "$home/.bashrc",
         "$home/.bash_profile_local",
