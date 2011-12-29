@@ -25,6 +25,9 @@ require 5.008;
 ##############################################################################
 
 package App::BCVI;
+BEGIN {
+    $App::BCVI::VERSION = '3.05';
+}
 
 use File::Spec;
 use File::Path;
@@ -219,10 +222,10 @@ END_POD
     $class->register_command(
         name        => 'vi',
         description => <<'END_POD'
-Invokes C<gvim> on the remote file - after translating the host+path to
+Invokes C<mvim> on the remote file - after translating the host+path to
 an scp URI.  This is the default command if no C<--command> option is
 specified.  If multiple filenames are supplied, the first will be opened
-in gvim and you should use C<:n> to load the 'next' file.
+in mvim and you should use C<:n> to load the 'next' file.
 END_POD
     );
 
@@ -1243,7 +1246,7 @@ sub execute_vi {
 
     my $alias = $self->calling_host();
     my @files = map { "scp://$alias/$_" } $self->get_filenames();
-    system('gvim', '--', @files);
+    system('mvim', '--', @files);
 }
 
 
@@ -1252,7 +1255,7 @@ sub execute_viwait {
 
     my $alias = $self->calling_host();
     my @files = map { "scp://$alias/$_" } $self->get_filenames();
-    system('gvim', '-f', '--', @files);
+    system('mvim', '-f', '--', @files);
 }
 
 
@@ -1482,7 +1485,7 @@ named F<pluto> and runs the command C<bcvi .bashrc>
 =item *
 
 bcvi tunnels the details back to sally's workstation which then invokes the
-command C<gvim scp://pluto//home/sally/.bashrc>
+command C<mvim scp://pluto//home/sally/.bashrc>
 
 =item *
 
